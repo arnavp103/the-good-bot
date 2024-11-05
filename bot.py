@@ -88,11 +88,15 @@ class TaskBot(commands.Bot):
                 # Format tasks into a message
                 message = "📋 **Open Tasks:**\n\n"
                 for task in tasks:
+                    # remove the empty line that sometimes appears after the heading
+                    if task == '':
+                        continue
+
                     due_date_match = re.search(r'📅 (\d{4}-\d{2}-\d{2})', task)
                     due_date = f"(Due: {due_date_match.group(1)})" if due_date_match else ""
                     
                     # Clean up the task text
-                    clean_task = re.sub(r'- \[ \] #', '', task)  # Remove checkbox and #
+                    clean_task = re.sub(r'- \[ \] #task', '', task)  # Remove checkbox and #task
                     clean_task = re.sub(r'➕ \d{4}-\d{2}-\d{2}', '', clean_task)  # Remove creation date
                     clean_task = re.sub(r'📅 \d{4}-\d{2}-\d{2}', '', clean_task)  # Remove due date
                     clean_task = clean_task.strip()
@@ -116,7 +120,7 @@ class TaskBot(commands.Bot):
         try:
             # Format the task
             today = datetime.now().strftime("%Y-%m-%d")
-            formatted_task = f"- [ ] {task_text} ➕ {today}"
+            formatted_task = f"- [ ] #task {task_text} ➕ {today}"
             if due_date:
                 formatted_task += f" 📅 {due_date}"
 
@@ -160,8 +164,8 @@ class TaskBot(commands.Bot):
             if tasks_start == -1:
                 raise ValueError("Tasks section not found in agenda file")
             
-            # Insert task at the top of the tasks section
-            content.insert(tasks_start, task + '\n')
+            # Insert task at the top of the tasks section with an extra newline
+            content.insert(tasks_start, '\n' + task + '\n')
             
             with open(file_path, 'w', encoding='utf-8') as f:
                 f.writelines(content)
