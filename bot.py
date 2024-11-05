@@ -18,8 +18,8 @@ logger = logging.getLogger(__name__)
 config = dotenv_values(".env")
 
 # Configuration
-VAULT_PATH = "./"  # Update this
-AGENDA_FILE = "agenda.md"
+VAULT_PATH = "/home/arnav/Downloads/projects/highbinder/"
+AGENDA_FILE = "00 - Life/Agenda.md"
 # ALLOWED_USERS = []  # Add your Discord user ID here
 TOKEN = config["DISCORD_BOT_TOKEN"]
 
@@ -124,10 +124,15 @@ class TaskBot(commands.Bot):
             if due_date:
                 formatted_task += f" 📅 {due_date}"
 
+            # want to make sure there's no merge conflicts
+            success, output = run_git_command(['git', 'pull'])
+            if not success:
+                return False, f"Failed to pull changes: {output}"
+
             # Add task to file
             self.add_task_to_file(formatted_task)
             
-            # Git operations
+
             success, output = run_git_command(['git', 'add', AGENDA_FILE])
             if not success:
                 return False, f"Failed to stage changes: {output}"
