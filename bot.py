@@ -258,7 +258,12 @@ class TaskBot(commands.Bot):
             task_completed = False
             for line in original_content:
                 if line.strip() == task.strip():
-                    new_content.append(line.replace("- [ ]", "- [x]"))
+                    completed_line = line
+                    completed_line = completed_line.replace("- [ ]", "- [x]")
+                    completed_line = (
+                        completed_line + " ✅ " + datetime.now().strftime("%Y-%m-%d")
+                    )
+                    new_content.append(completed_line)
                     task_completed = True
                 else:
                     new_content.append(line)

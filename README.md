@@ -6,7 +6,7 @@ Discord bot to manage Obsidian vaults from the convenience of messages over a ph
 
 To run the bot
 ```
-docker compose up -d --build
+docker compose up -d
 ```
 
 To view logs:
@@ -22,7 +22,7 @@ docker compose down
 To update the bot with new changes:
 ```
 docker compose down
-docker compose up -d --build
+docker compose up -d
 ```
 
 ## Commands
