@@ -17,5 +17,9 @@ COPY requirements.txt .
 # Install dependencies
 RUN pip install -r requirements.txt
 
+# Allow root user to access the users git directory
+RUN git config --global --add safe.directory '*'
+
+
 # Run the bot
 CMD ["python", "bot.py"]
