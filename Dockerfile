@@ -23,5 +23,9 @@ RUN pip install discord.py python-dotenv
 # Configure git
 RUN git config --global --add safe.directory '*'
 
+# TODO: make these configurable
+RUN git config --global user.email "arnavp103@gmail.com"
+RUN git config --global user.name "Arnav Priyadarshi"
+
 # Run the bot
 CMD ["python", "bot.py"]
