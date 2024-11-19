@@ -8,18 +8,14 @@ RUN apt-get update && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-# Install uv
-RUN pip install uv
-
 # Copy project files
-COPY pyproject.toml uv.lock ./
-COPY bot.py ./
-COPY .env ./
+COPY bot.py .
+COPY pyproject.toml .
+COPY .env .
+COPY requirements.txt .
 
-# Create and activate virtual environment, install dependencies
-RUN uv venv && \
-    . .venv/bin/activate && \
-    uv pip install --requirement uv.lock
+# Install dependencies
+RUN pip install -r requirements.txt
 
 # Run the bot
-CMD [".venv/bin/python", "bot.py"]
+CMD ["python", "bot.py"]
