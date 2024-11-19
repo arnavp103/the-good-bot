@@ -11,7 +11,7 @@ from dotenv import dotenv_values
 # Configure logging
 logging.basicConfig(
     level=logging.INFO,
-    format="[%(asctime)s] - [%(name)s] - [%(levelname)s] - %(message)s",
+    format="[%(asctime)s][%(name)s][%(levelname)s] - %(message)s",
 )
 logger = logging.getLogger(__name__)
 
@@ -151,7 +151,7 @@ class TaskBot(commands.Bot):
                 logger.error(f"Error completing task: {str(e)}")
                 await ctx.send(f"❌ Error completing task: {str(e)}")
 
-        @self.command(name="help")
+        @self.command(name="examples")
         async def show_help(ctx):
             """Show help information about available commands."""
             help_text = """

@@ -1,0 +1,10 @@
+version: '3.8'
+
+services:
+  discord-bot:
+    build: .
+    volumes:
+      - ${VAULT_PATH}:${VAULT_PATH}  # Mount vault directory
+    restart: unless-stopped
+    environment:
+      - TZ=UTC  
