@@ -258,7 +258,7 @@ class TaskBot(commands.Bot):
             task_completed = False
             for line in original_content:
                 if line.strip() == task.strip():
-                    completed_line = line
+                    completed_line = line.rstrip()  # Remove trailing newline
                     completed_line = completed_line.replace("- [ ]", "- [x]")
                     completed_line = (
                         completed_line + " ✅ " + datetime.now().strftime("%Y-%m-%d")
