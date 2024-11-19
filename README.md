@@ -22,7 +22,7 @@ docker compose down
 To update the bot with new changes:
 ```
 docker compose down
-docker compose up -d
+docker compose up -d --build
 ```
 
 ## Commands

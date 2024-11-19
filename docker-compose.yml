@@ -4,7 +4,14 @@ services:
   discord-bot:
     build: .
     volumes:
-      - ${VAULT_PATH}:${VAULT_PATH}  # Mount vault directory
+      - ${VAULT_PATH}:${VAULT_PATH} # Mount your vault directory
+      - ~/.ssh:/root/.ssh:ro # Mount SSH keys as read-only
     restart: unless-stopped
     environment:
-      - TZ=UTC  
+      - TZ=UTC
+      - GIT_SSH_COMMAND=ssh -o StrictHostKeyChecking=no # Skip host key verification
+    healthcheck:
+      test: [ "CMD", "python", "-c", "import socket; sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM); sock.connect(('discord.com', 443))" ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
